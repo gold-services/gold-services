@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Serviço - Promoção</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:
+        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+        url("img/fundo.jpeg") center center/cover no-repeat fixed;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.card{
+    width:100%;
+    max-width:700px;
+    background:rgba(255,255,255,.10);
+    backdrop-filter:blur(10px);
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.logo{
+    display:block;
+    margin:0 auto 20px;
+    max-width:180px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    margin-top:6px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#1ea0ff;
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#0f87dd;
+}
+
+#result{
+    display:none;
+    text-align:center;
+    margin-top:30px;
+}
+
+#desc{
+    color:#FFD700;
+    margin:15px 0;
+}
+
+#srv{
+    font-size:18px;
+    margin-bottom:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<img src="imagem1.png" class="logo" alt="Logo">
+
+<h1>🎡 Promoção Gold Serviço</h1>
+
+<label>
+Nome
+<input type="text" id="nome" placeholder="Digite seu nome">
+</label>
+
+<label>
+Telefone
+<input type="tel" id="fone" placeholder="(64) 99999-9999">
+</label>
+
+<label>
+Serviço
+<select id="servico">
+<option value="Motor de Portão|10">Motor de Portão</option>
+<option value="Kit de Câmeras|20">Kit de Câmeras</option>
+<option value="Cerca Elétrica|15">Cerca Elétrica</option>
+<option value="Interfone|25">Interfone</option>
+<option value="Instalação de Ar Condicionado|20">Instalação de Ar Condicionado</option>
+<option value="Higienização|20">Higienização</option>
+<option value="Concertina|20">Concertina</option>
+</select>
+</label>
+
+<button onclick="girar()">
+🎡 Girar Roleta
+</button>
+
+<div id="result">
+<h2>🎉 PARABÉNS!</h2>
+<h1 id="desc"></h1>
+<p id="srv"></p>
+
+<button id="zap">
+💬 Entrar em Contato pelo WhatsApp
+</button>
+</div>
+
+</div>
+
+<script>
+
+function girar(){
+
+    if(localStorage.getItem("goldPromo")){
+        alert("Você já participou desta promoção neste dispositivo.");
+        return;
+    }
+
+    const nome=document.getElementById("nome").value.trim();
+    const telefone=document.getElementById("fone").value.trim();
+
+    if(nome===""){
+        alert("Informe seu nome.");
+        return;
+    }
+
+    if(telefone===""){
+        alert("Informe seu telefone.");
+        return;
+    }
+
+    const dados=document.getElementById("servico").value.split("|");
+
+    const servico=dados[0];
+    const desconto=dados[1];
+
+    document.getElementById("result").style.display="block";
+    document.getElementById("desc").innerText=desconto+"% DE DESCONTO";
+    document.getElementById("srv").innerText=servico;
+
+    const mensagem=
+`Olá! Meu nome é ${nome}.
+Telefone: ${telefone}
+
+Participei da promoção da Gold Serviço e ganhei ${desconto}% de desconto em ${servico}.
+
+Gostaria de agendar um orçamento.`;
+
+    document.getElementById("zap").onclick=function(){
+
+        window.location.href=
+        "https://wa.me/5564992222984?text="+encodeURIComponent(mensagem);
+
+    }
+
+    localStorage.setItem("goldPromo","1");
+
+}
+
+</script>
+
+</body>
+</html>
